@@ -10,6 +10,7 @@
   "author": "Keshavaa Shaiskandan",
   "license": "MIT",
   "dependencies": {
+    "@google-cloud/vision": "^2.3.1",
     "aws-sdk": "^2.894.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
