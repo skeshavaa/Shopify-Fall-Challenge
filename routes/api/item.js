@@ -1,92 +1,19 @@
 const express = require('express')
+const AWS = require('aws-sdk');
 const router = express.Router();
 const auth = require('../../middleware/auth')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const multer = require('multer');
+var upload = require('../api/file-upload')
 
+const singleImage = upload.single('image')
 
-router.post('/', (req, res) => {
-    const { name, email, password } = req.body;
+router.post('/addImage', auth, (req, res) => {
 
-    if (!name || !email || !password) {
-        return res.status(400).json({status: "failure", msg: "Please enter all fields"})
-    }
-
-    User.findOne({email}).then(user => {
-        if (user){
-            return res.status(400).json({status: "failure", msg: "User already exists!"});
-        }
-
-        const newUser = new User ({
-            name,
-            email,
-            password
-        })
-
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-                if (err) throw err;
-                newUser.password = hash;
-                newUser.save()
-                .then(user => {
-
-                    jwt.sign(
-                        { id: user.id },
-                        'shopifyChallenge',
-                        { expiresIn: 3600 },
-                        (err, token) => {
-                            if (err) throw err;
-                            res.status(200).json(
-                                {
-                                    token,
-                                    user: {
-                                        id: user.id,
-                                        name: user.name,
-                                        email: user.email
-                                    }
-                                }
-                            )
-                        }
-                    )
-                })
-            })
-        })
-    })
+   singleImage(req, res, function() {
+       return res.json({imageurl: req.file.location})
+   })
 })
 
-router.post('/login', (req, res) => {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-        return res.status(400).json({status: "failure", msg: "Please enter all fields"})
-    }
-
-    User.findOne({ email })
-    .then(user => {
-        if (!user) return res.status(400).json({status: "failure", msg: "User does not exist"})
-
-        bcrypt.compare(password, user.password)
-            .then(isMatch => {
-                if (!isMatch) return res.status(400).json({status: "failure", msg: "Bad credentials"})
-                jwt.sign(
-                    { id: user.id },
-                    'shopifyChallenge',
-                    { expiresIn: 3600 },
-                    (err, token) => {
-                        if (err) throw err;
-                        res.status(200).json(
-                            {
-                                token,
-                                user: {
-                                    id: user.id,
-                                    name: user.name,
-                                    email: user.email
-                                }
-                            }
-                        )
-                    }
-                )
-            })
-    })
-})
 
 module.exports = router;
