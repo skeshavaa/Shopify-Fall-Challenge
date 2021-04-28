@@ -6,11 +6,11 @@ const fileUpload = require('express-fileupload')
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 mongoose.connect('mongodb+srv://keshavaa:mlhhackathon@cluster0.yybsq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-    , {useNewUrlParser: true,  useUnifiedTopology: true })
+    , {useNewUrlParser: true,  useUnifiedTopology: true, useFindAndModify: false })
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.log(err))
 
