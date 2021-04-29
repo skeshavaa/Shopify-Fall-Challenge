@@ -26,7 +26,7 @@ router.get('/searchByText', (req, res) => {
         
         for (var i = 0; i < images.length; i++){
             for (var j = 0; j < queryTags.length; j++){
-                if (images[i].tags.includes(queryTags[j]) || images[i].name.includes(queryTags[j])){
+                if ((images[i].tags.includes(queryTags[j]) || images[i].name.includes(queryTags[j])) && images[i].public == true){
                     results.push(images[i])
                     break;
                 }
@@ -60,7 +60,7 @@ router.get('/searchByImage', (req, res) => {
         
                 for (var i = 0; i < images.length; i++){
                     for (var j = 0; j < queryTags.length; j++){
-                        if (images[i].tags.includes(queryTags[j]) || images[i].name.includes(queryTags[j])){
+                        if ((images[i].tags.includes(queryTags[j]) || images[i].name.includes(queryTags[j])) && images[i].public == true){
                             results.push(images[i])
                             break;
                         }
