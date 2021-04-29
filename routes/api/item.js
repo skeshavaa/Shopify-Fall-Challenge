@@ -8,10 +8,73 @@ const user = require('../../models/user');
 
 
 const singleImage = upload.single('image')
+const queryImage = upload.single('queryImage')
 const client = new vision.ImageAnnotatorClient({
     keyFilename: 'vision-auth.json'
 });
 
+// REQUEST: GET
+// GETS IMAGES FROM IMAGE REPO BASED ON QUERYTEXT
+router.get('/searchByText', (req, res) => {
+    if (!req.header('queryText')){
+        return res.status(200).json({status: "failure", msg: "No queryText header provided"})
+    }
+    const queryTags = req.header('queryText').split(",")
+    const results = []
+
+    Image.find({}).then((images) => {
+        
+        for (var i = 0; i < images.length; i++){
+            for (var j = 0; j < queryTags.length; j++){
+                if (images[i].tags.includes(queryTags[j]) || images[i].name.includes(queryTags[j])){
+                    results.push(images[i])
+                    break;
+                }
+            }
+        }
+
+        return res.status(200).json({status: "success", results: results})
+    })
+})
+
+// REQUEST: GET
+// GETS IMAGES BASED ON QUERYIMAGE
+router.get('/searchByImage', (req, res) => {
+
+    queryImage(req, res, function () {
+        const url = req.file.location
+        const results = []
+        client.labelDetection(url).then(visionResults => {
+            const labels = visionResults[0].labelAnnotations;
+            
+            const queryTags = labels.map((label) => {
+                if (label.score >= 0.8){
+                    return label.description
+                } else{
+                    return null
+                }
+            });
+            console.log(queryTags)
+
+            Image.find({}).then((images) => {
+        
+                for (var i = 0; i < images.length; i++){
+                    for (var j = 0; j < queryTags.length; j++){
+                        if (images[i].tags.includes(queryTags[j]) || images[i].name.includes(queryTags[j])){
+                            results.push(images[i])
+                            break;
+                        }
+                    }
+                }
+        
+                return res.status(200).json({status: "success", results: results})
+            })
+        })
+    })
+})
+
+// REQUEST: POST
+// ADDS IMAGE TO IMAGE REPOSITORY
 router.post('/addImage', auth, async (req, res) => {
     //Get Tags and name from request header
     var tags = req.header('tags') ? req.header('tags').toString().split(",") : [];
@@ -82,10 +145,6 @@ router.post('/addImage', auth, async (req, res) => {
 
         // //return res.json({ imageurl: req.file.location })
     })
-
-
-
-
 
 })
 
