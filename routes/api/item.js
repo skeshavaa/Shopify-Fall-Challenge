@@ -16,6 +16,8 @@ router.post('/addImage', auth, async (req, res) => {
     //Get Tags and name from request header
     var tags = req.header('tags') ? req.header('tags').toString().split(",") : [];
     const name = req.header('name') ? req.header('name').toString() : "";
+    const public = req.header('public') ? req.header('public') == "True" : True;
+        
     var url;
 
     singleImage(req, res, function () {
@@ -39,7 +41,7 @@ router.post('/addImage', auth, async (req, res) => {
             //Construction image to save in mongoDB
             var postedBy = "";
             var uploads;
-            
+
             //Getting user that is posting image's information
             user.findById(req.user.id)
                 .select('-password')
@@ -51,7 +53,8 @@ router.post('/addImage', auth, async (req, res) => {
                         name,
                         tags,
                         url,
-                        postedBy: postedBy
+                        postedBy: postedBy,
+                        public
                     })
 
                     //Saving image then updating user with newly uploaded url
@@ -60,7 +63,7 @@ router.post('/addImage', auth, async (req, res) => {
                         uploads.forEach((uploadedImage) => {
                             updatedUploads.push(uploadedImage)
                         })
-                        updatedUploads.push(url)
+                        updatedUploads.push(res._id)
                         user.findByIdAndUpdate(req.user.id, {uploads: updatedUploads}).then((res) => console.log(res)).catch(err => console.log(err))
                     })
 

@@ -18,6 +18,10 @@ const imageSchema = new Schema({
     tags: {
         type: [String],
         required: false
+    },
+    public: {
+        type: Boolean,
+        required: false
     }
 })
 
