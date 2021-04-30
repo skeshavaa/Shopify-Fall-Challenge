@@ -1,0 +1,26 @@
+.heading1 {
+    font-family: "Comfortaa", sans-serif;
+    font-size: 24px;
+}
+
+.heading2 {
+    font-family: "Comfortaa", sans-serif;
+    font-size: 18px;
+    color: #FF8541;
+}
+
+.landingContainer{
+    text-align: left;
+    margin-top: 35px;
+    padding-left: 35px;
+}
+
+.or{
+    text-align: center;
+    font-family: "Comfortaa", sans-serif;
+    font-size: 24px;
+}
+
+.searchContainer{
+    margin-top: 65px;
+}

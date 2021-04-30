@@ -1,0 +1,30 @@
+.navContainer{
+    background-color: #FF8541;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rightContainer{
+    display: flex;
+    padding-top: 10px;
+    padding-right: 35px;
+}
+
+.leftContainer{
+    display: flex;
+    padding-top: 10px;
+    padding-right: 25px;
+}
+
+.navLink {
+    font-family: "Comfortaa", sans-serif;
+    color: white;
+    font-size: 18px;
+    padding-left: 25px;
+    margin-left: 10px;
+}
+
+body, html {
+    margin: 0;
+}

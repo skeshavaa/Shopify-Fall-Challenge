@@ -1,0 +1,61 @@
+.searchByText{
+    width: 631px;
+    height: 56px;
+    left: 404px;
+    top: 228px;
+
+    background: #F8F8F8;
+    border-radius: 48px;
+    border-color: transparent;
+    padding-left: 20px;
+    font-family: "Comfortaa", sans-serif;
+    font-size: 18px;
+}
+
+.searchInput{
+    outline: none;
+    color: #8B8B8B;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.searchByImage{
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 13px;
+    height: 40px;
+    left: 404px;
+    top: 180px;
+    outline: none;
+    background: #F8F8F8;
+    border-radius: 48px;
+    border-color: transparent;
+    padding-left: 20px;
+    font-family: "Comfortaa", sans-serif;
+    font-size: 18px;
+}
+
+.searchContainer{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.input1Container{
+    display: flex;
+    justify-content: center;
+}
+
+.input2Container{
+    display: flex;
+    justify-content: center;
+}

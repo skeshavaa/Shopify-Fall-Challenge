@@ -4,8 +4,11 @@
   "description": "Shopify Challenge for Fall 2021 Internship",
   "main": "server.js",
   "scripts": {
+    "client-install": "npm i --prefix client",
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concunrrently \"npm run server\" \"npm run client\""
   },
   "author": "Keshavaa Shaiskandan",
   "license": "MIT",
