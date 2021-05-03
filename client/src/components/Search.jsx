@@ -8,6 +8,7 @@ function Search() {
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
+    const [queryText, setQueryText] = useState("")
 
     useEffect(() => {
 
@@ -29,12 +30,30 @@ function Search() {
         }
 
         const imageArr = []
-        data.forEach((image) => {
-            imageArr.push(<img className="image-item" src={image.url} />)
-            
-        })
 
-        console.log(imageArr)
+        if (queryText == ""){
+            data.forEach((image) => {
+                imageArr.push(<img className="image-item" src={image.url} />)
+                console.log(image)
+            })
+        }else{
+            const queryTags = queryText.split(",")
+            data.forEach((image) => {
+                for (var i = 0; i < queryTags.length; i++){
+                    if (image.name.toLowerCase().includes(queryTags[i].toLowerCase())){
+                        imageArr.push(<img className="image-item" src={image.url} />)
+                        break;
+                    }
+                    for (var j = 0; j < image.tags.length; j++){
+                        if (image.tags[j].toLowerCase().includes(queryTags[i].toLowerCase())){
+                            imageArr.push(<img className="image-item" src={image.url} />)
+                            break;
+                        }
+                    }
+                }
+            })
+        }
+
 
         return (
             <div>
@@ -48,11 +67,16 @@ function Search() {
         )
 
     }
+    
+    const queryTextChange = (e) => {
+        e.preventDefault();
+        setQueryText(e.target.value)
+    }
 
     return (
         <div className="searchContainer">
             <div className="inputContainer input1Container">
-                <input className="searchInput searchByText" type="text" placeholder="Search by name, or tags seperate by commas" />
+                <input className="searchInput searchByText" type="text" placeholder="Search by name, or tags seperate by commas" onChange={(e) => queryTextChange(e)} />
             </div>
             <h1 className="or">Or</h1>
             <div className="inputContainer input2Container">
