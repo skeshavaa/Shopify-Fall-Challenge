@@ -3,10 +3,12 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const auth = require('./middleware/auth')
 const fileUpload = require('express-fileupload')
+const cors = require('cors')
 
 const app = express();
 
 app.use(express.json());
+app.use(cors())
 app.use(express.urlencoded({extended: true}));
 
 mongoose.connect('mongodb+srv://keshavaa:mlhhackathon@cluster0.yybsq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'

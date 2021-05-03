@@ -9,17 +9,14 @@ function Search() {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     const [queryText, setQueryText] = useState("")
+    const [queryImage, setQueryImage] = useState();
 
     useEffect(() => {
 
         axios.get('/api/getImages').then((res) => {
             setData(res.data.results)
-        })
-
-        return () => {
             setLoading(false)
-
-        }
+        })
     }, [])
 
     const Images = () => {
@@ -77,13 +74,6 @@ function Search() {
         <div className="searchContainer">
             <div className="inputContainer input1Container">
                 <input className="searchInput searchByText" type="text" placeholder="Search by name, or tags seperate by commas" onChange={(e) => queryTextChange(e)} />
-            </div>
-            <h1 className="or">Or</h1>
-            <div className="inputContainer input2Container">
-                <label class="searchInput searchByImage">
-                    <input type="file" />
-                    Search by Image
-                </label>
             </div>
             <Images />
 

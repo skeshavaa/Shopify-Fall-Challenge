@@ -60,6 +60,7 @@ router.get('/searchByText', (req, res) => {
 router.get('/searchByImage', (req, res) => {
 
     queryImage(req, res, function () {
+        console.log(req)
         const url = req.file.location
         const results = []
         client.labelDetection(url).then(visionResults => {
