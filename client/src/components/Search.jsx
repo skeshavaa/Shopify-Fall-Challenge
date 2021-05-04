@@ -44,7 +44,7 @@ function Search() {
                     }
 
                     if (image.name.toLowerCase().includes(queryTags[i].toLowerCase())){
-                        if (!imageArr.includes(<img className="image-item" src={image.url} />)){
+                        if (!records.includes(image.url)){
                             imageArr.push(<img className="image-item" src={image.url} />)
                             records.push(image.url)
                             break;
@@ -96,7 +96,7 @@ function Search() {
         }
 
         uploadFile(queryImage, config).then((data) => {
-            console.log(data)
+
             axios({
                 method: "post",
                 url: "http://localhost:5000/api/getLabels",
@@ -104,7 +104,6 @@ function Search() {
                     url: data.location
                 }
             }).then((res) => {
-                console.log(res.data.labels.join())
                 setQueryText(res.data.labels.join())
             })
         }).catch((err) => console.log(err))
