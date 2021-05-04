@@ -13,6 +13,24 @@ const client = new vision.ImageAnnotatorClient({
     keyFilename: 'vision-auth.json'
 });
 
+router.post('/getLabels', (req, res) => {
+    console.log(req.body.url)
+    client.labelDetection(req.body.url).then(results => {
+        const labels = results[0].labelAnnotations;
+
+        const chars = []
+
+        for (var i = 0; i < labels.length; i++){
+            if (labels[i].score < 0.8){
+                break;
+            }
+            chars.push(labels[i].description);
+        }
+
+        return res.json({labels: chars})
+    })
+})
+
 // REQUEST: GET
 // GETS ALL PUBLIC IMAGES
 router.get('/getImages', (req, res) => {
