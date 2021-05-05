@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Link } from "react-router-dom";
 import Landing from './pages/Landing';
 import './styles/font.css'
 import Navbar from './components/Navbar';
+import Auth from './pages/Auth';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Navbar />
       <BrowserRouter>
         <Route path="/" exact component={Landing}/>
+        <Route path="/auth" exact component={Auth}/>
       </BrowserRouter>
     </div>
   );
