@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import '../styles/Navbar.css'
+import { AuthContext } from '../App'
+import { Link } from 'react-router-dom'
 
 function Navbar() {
+    const { state, dispatch } = useContext(AuthContext)
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        dispatch({
+            type: "LOGOUT"
+        })
+    }
+
     return (
         <div className="navContainer">
             <div className="leftContainer">
@@ -9,7 +20,9 @@ function Navbar() {
                 <h1 className="navLink">Swagger Documentation</h1>
             </div>
             <div className="rightContainer">
-                <h1 className="navLink">Sign In</h1>
+                {state.isAuthenticated ? 
+                <h1 className="navLink logout" onClick={(e) => handleLogout(e)}>Logout</h1> :
+                <Link className="navA" to="/auth"><h1 className="navLink">Login/Sign Up</h1></Link>}
             </div>
         </div>
     )
