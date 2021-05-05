@@ -19,11 +19,17 @@ function Navbar() {
                 <h1 className="navLink">Postman Request Library</h1>
                 <h1 className="navLink">Swagger Documentation</h1>
             </div>
-            <div className="rightContainer">
-                {state.isAuthenticated ? 
-                <h1 className="navLink logout" onClick={(e) => handleLogout(e)}>Logout</h1> :
-                <Link className="navA" to="/auth"><h1 className="navLink">Login/Sign Up</h1></Link>}
-            </div>
+            {state.isAuthenticated ? 
+                <div className="rightContainer">
+                    <Link className="navA" to="/profile"><h1 className="navLink">Profile</h1></Link>
+                    <h1 className="navLink logout" onClick={(e) => handleLogout(e)}>Logout</h1>
+                </div> 
+                :
+                <div className="rightContainer">
+                    <Link className="navA" to="/auth"><h1 className="navLink">Login/Sign Up</h1></Link>
+                </div>
+            }
+            
         </div>
     )
 }

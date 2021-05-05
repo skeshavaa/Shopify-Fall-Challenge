@@ -4,7 +4,7 @@ function auth(req, res, next) {
     const token = req.header('token')
 
     if (!token) {
-        res.status(401).json({staus: "failure", msg: "No token, authorization denied"})
+        res.status(401).json({status: "failure", msg: "No token, authorization denied"})
     }
 
     try {

@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Auth from './pages/Auth';
 import { useReducer } from 'react'
 import React, { createContext } from 'react'
+import Profile from './pages/Profile';
 
 export const AuthContext = createContext();
 const initialState = {
@@ -48,6 +49,7 @@ function App() {
           <Navbar />
           <Route path="/" exact component={Landing}/>
           <Route path="/auth" exact component={Auth}/>
+          <Route path="/profile" exact component={Profile}/>
         </BrowserRouter>
       </div>
     </AuthContext.Provider>

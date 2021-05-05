@@ -5,6 +5,7 @@ const User = require('../../models/user');
 const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
 const user = require('../../models/user');
+const Image = require('../../models/image')
 
 //Registering user
 router.post('/', (req, res) => {
@@ -95,11 +96,17 @@ router.post('/login', (req, res) => {
 
 //Route to get user information based on token
 router.get('/user', auth, (req, res) => {
+    const imageArr = []
+
     user.findById(req.user.id)
         .select('-password')
-        .then(user => res.json(user))
+        .then(user => {
+            
+            Image.find({}).where('_id').in(user.uploads).then((objs) => {
+                return res.json({status: "success", user, uploads: objs})
+            })
+        })
     
-    console.log(req.body)
 })
 
 module.exports = router;
