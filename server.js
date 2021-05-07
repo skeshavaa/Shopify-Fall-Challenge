@@ -4,12 +4,16 @@ const bodyParser = require('body-parser')
 const auth = require('./middleware/auth')
 const fileUpload = require('express-fileupload')
 const cors = require('cors')
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yml');
 
 const app = express();
 
 app.use(express.json());
 app.use(cors())
 app.use(express.urlencoded({extended: true}));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 mongoose.connect('mongodb+srv://keshavaa:mlhhackathon@cluster0.yybsq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
     , {useNewUrlParser: true,  useUnifiedTopology: true, useFindAndModify: false })
