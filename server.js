@@ -7,6 +7,7 @@ const cors = require('cors')
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yml');
+const path = require('path')
 
 const app = express();
 
@@ -22,6 +23,14 @@ mongoose.connect('mongodb+srv://keshavaa:mlhhackathon@cluster0.yybsq.mongodb.net
 
 app.use('/api/users', require('./routes/api/users'))
 app.use('/api', require('./routes/api/item'))
+
+if (process.env.NODE_ENV === "production"){
+    app.use(express.static('client/build'))
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    });
+}
 
 const port = process.env.PORT || 5000
 
