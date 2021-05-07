@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Circles } from 'react-loading-icons'
 import '../styles/Search.css'
 import axios from 'axios'
 import Masonry from 'react-masonry-css'
@@ -22,7 +23,9 @@ function Search() {
     const Images = () => {
         if (loading) {
             return (
-                <h1>Loading</h1>
+                <div className="center">
+                    <Circles style={{"margin-top": "45px"}} fill="#FF8541"/>
+                </div>
             )
         }
 

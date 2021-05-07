@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
 function Auth() {
-    const [login, setLogin] = useState(false)
+    const [login, setLogin] = useState(true)
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")

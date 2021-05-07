@@ -68,6 +68,11 @@ input[type="file"] {
     width: 400px;
 }
 
+.center{
+    display: flex;
+    justify-content: center;
+}
+
 
 
 /*CSS For image grid */

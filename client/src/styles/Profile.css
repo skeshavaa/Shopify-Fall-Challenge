@@ -1,0 +1,61 @@
+.name{
+    font-family: "Comfortaa", sans-serif;
+}
+
+.email {
+    font-family: "Comfortaa", sans-serif;
+    color: #FF8541;
+    font-size: 20px;
+}
+
+.profileImg {
+    width: 400px;
+}
+
+.my-masonry-grid {
+    display: -webkit-box; /* Not needed if autoprefixing */
+    display: -ms-flexbox; /* Not needed if autoprefixing */
+    display: flex;
+    margin-left: auto; /* gutter size offset */
+    margin-right: auto;
+    width: 1250px;
+    margin-top: 50px;
+  }
+  .my-masonry-grid_column {
+    padding-left: 10px; /* gutter size */
+    background-clip: padding-box;
+  }
+  
+  /* Style your items */
+  .my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
+    background: white;
+    margin-bottom: 30px;
+  }
+
+  .profileImgContainer{
+    border: none;
+  }
+
+  .imgTitle{
+    font-family: "Comfortaa", sans-serif;
+    margin-top: 0;
+    padding-top: 10px;
+  }
+
+  .public{
+    font-family: "Comfortaa", sans-serif;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 20px;
+    background-color: green;
+  }
+
+  .private{
+    font-family: "Comfortaa", sans-serif;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 20px;
+    background-color: red;
+  }
