@@ -1,10 +1,11 @@
 const AWS = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
+const { ID, SECRET } = require('../.././config')
 
 const s3 = new AWS.S3({
-    accessKeyId: "AKIAQLCIPQ3CUIIZL4U4",
-    secretAccessKey: "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"
+    accessKeyId: ID,
+    secretAccessKey: SECRET
 });
 
 const upload = multer({
