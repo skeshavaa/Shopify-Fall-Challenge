@@ -8,6 +8,7 @@ const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yml');
 const path = require('path')
+const { MongoDB_User, MongoDB_Password } = require('./config')
 
 const app = express();
 
@@ -16,9 +17,11 @@ app.use(cors())
 app.use(express.urlencoded({extended: true}));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-mongoose.connect('mongodb+srv://keshavaa:mlhhackathon@cluster0.yybsq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+mongoose.connect(`mongodb+srv://${process.env.MongoDB_User}:${process.env.MongoDB_Password}@cluster0.yybsq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
     , {useNewUrlParser: true,  useUnifiedTopology: true, useFindAndModify: false })
-    .then(() => console.log('Connected to MongoDB'))
+    .then(() => {
+        console.log('Connected to MongoDB')
+    })
     .catch((err) => console.log(err))
 
 app.use('/api/users', require('./routes/api/users'))
