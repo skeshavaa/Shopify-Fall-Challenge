@@ -12,24 +12,23 @@ paths:
     post:
       tags:
       - "Authentication"
-      summary: Registers a user and provides a jwt token for uploading images
-      description: Provide name, email and password and create an account for adding images to image repo
-      parameters:
-      - in: "body"
-        name: body
-        description: Credentials object needed to register for an account
-        schema:
-          type: object
-          properties:
-            name:
-              type: string
-              example: testuser
-            email:
-              type: string
-              example: testuser@gmail.com
-            password:
-              type: string
-              example: password
+      summary: Logs in a user and provides a jwt token for uploading images
+      description: Provide email and password to login to pre-existing account to upload images
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: testuser
+                email:
+                  type: string
+                  example: testuser@gmail.com
+                password:
+                  type: string
+                  example: password
       responses:
         200:    # status code
           description: A JSON object containing your user object and a jwt token valid for 1 hour
@@ -54,26 +53,25 @@ paths:
                         type: string
                         example: 6089ea5c8680de08584066dc
         400:
-          description: Request body missing necessary fields OR user already exists
+          description: Request body missing necessary fields OR user doesn't exist
   /api/users/login:
     post:
       tags:
       - "Authentication"
       summary: Logs in a user and provides a jwt token for uploading images
       description: Provide email and password to login to pre-existing account to upload images
-      parameters:
-      - in: "body"
-        name: body
-        description: Credentials object needed to login for an account
-        schema:
-          type: object
-          properties:
-            email:
-              type: string
-              example: testuser@gmail.com
-            password:
-              type: string
-              example: password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: testuser@gmail.com
+                password:
+                  type: string
+                  example: password
       responses:
         200:    # status code
           description: A JSON object containing your user object and a jwt token valid for 1 hour

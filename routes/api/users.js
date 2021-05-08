@@ -9,6 +9,7 @@ const Image = require('../../models/image')
 
 //Registering user
 router.post('/register', (req, res) => {
+
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
