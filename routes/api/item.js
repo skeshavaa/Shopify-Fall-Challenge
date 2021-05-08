@@ -56,10 +56,19 @@ router.get('/searchByText', (req, res) => {
         return res.status(200).json({status: "failure", msg: "No queryText header provided"})
     }
     const queryTags = req.header('queryText').split(",")
+
+    queryTags.map((tag) => tag.toLowerCase())
+
     const results = []
 
     Image.find({}).then((images) => {
-        
+
+        for (var i = 0; i < images.length; i++){
+            for (var j = 0; j < images[i].tags.length; j++){
+                images[i].tags[j] = images[i].tags[j].toString().toLowerCase();
+            }
+        }
+
         for (var i = 0; i < images.length; i++){
             for (var j = 0; j < queryTags.length; j++){
                 if ((images[i].tags.includes(queryTags[j]) || images[i].name.includes(queryTags[j])) && images[i].public == true){
@@ -73,9 +82,9 @@ router.get('/searchByText', (req, res) => {
     })
 })
 
-// REQUEST: GET
+// REQUEST: POST
 // GETS IMAGES BASED ON QUERYIMAGE
-router.get('/searchByImage', (req, res) => {
+router.post('/searchByImage', (req, res) => {
 
     queryImage(req, res, function () {
         console.log(req)
@@ -170,7 +179,8 @@ router.post('/addImage', auth, async (req, res) => {
                         name,
                         tags,
                         url,
-                        postedBy
+                        postedBy,
+                        public
                     })
                 })
 

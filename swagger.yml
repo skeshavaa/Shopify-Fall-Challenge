@@ -4,13 +4,16 @@ info:
   description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
   version: 0.1.9
 servers:
-  - url: https://young-cove-79509.herokuapp.com/
+  # - url: https://young-cove-79509.herokuapp.com/
+  - url: http://localhost:5000/
     description: Optional server description, e.g. Main (production) server
 paths:
   /api/users/register:
     post:
+      tags:
+      - "Authentication"
       summary: Registers a user and provides a jwt token for uploading images
-      description: Provide name, email and password and create an account for adding images to image rep
+      description: Provide name, email and password and create an account for adding images to image repo
       parameters:
       - in: "body"
         name: body
@@ -28,7 +31,7 @@ paths:
               type: string
               example: password
       responses:
-        '200':    # status code
+        200:    # status code
           description: A JSON object containing your user object and a jwt token valid for 1 hour
           content:
             application/json:
@@ -50,3 +53,314 @@ paths:
                       id: 
                         type: string
                         example: 6089ea5c8680de08584066dc
+        400:
+          description: Request body missing necessary fields OR user already exists
+  /api/users/login:
+    post:
+      tags:
+      - "Authentication"
+      summary: Logs in a user and provides a jwt token for uploading images
+      description: Provide email and password to login to pre-existing account to upload images
+      parameters:
+      - in: "body"
+        name: body
+        description: Credentials object needed to login for an account
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              example: testuser@gmail.com
+            password:
+              type: string
+              example: password
+      responses:
+        200:    # status code
+          description: A JSON object containing your user object and a jwt token valid for 1 hour
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.elYTVjODY4MGRlMDg1ODQwNjZkYyIsImlhdCI6MTYyMDQ1MDM0NSwiZXhwIjoxNjIwNDUzOTQ1fQ.qWF4jABj9NLv2vfKcKI_CoGB0_gg5vpTOE2IXG4xDo4
+                  user:
+                    type: object
+                    properties:
+                      name: 
+                        type: string
+                        example: loggedInUser
+                      email: 
+                        type: string
+                        example: loggedInUser@gmail.com
+                      id: 
+                        type: string
+                        example: 6089ea5c8680de08584066dc
+        400:
+          description: Request body missing necessary fields OR user doesn't exist
+  /api/getImages:
+    get:
+      tags:
+      - "Images"
+      summary: Returns all public images and info corresponding to them
+      responses:
+        200:    # status code
+          description: A JSON object containing your user object and a jwt token valid for 1 hour
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: ["success", "failure"]
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Example Picture
+                        url:
+                          type: string
+                          example: https://keshavaashopifychallenge.s3.amazonaws.com/someImageID
+                        postedBy:
+                          type: string
+                          example: testuser@gmail.com
+                        public:
+                          type: boolean
+                          enum: [true, false]
+                        tags:
+                          type: array
+                          items:
+                            - tagOne
+                            - tagTwo
+
+        400:
+          description: Invalid request
+  /api/searchByText:
+    get:
+      tags:
+      - "Images"
+      summary: Returns all public images and info corresponding to the queryText
+      parameters:
+      - in: "header"
+        name: queryText
+        schema:
+          type: string
+          example: hat,smile
+      responses:
+        200:    # status code
+          description: A JSON object containing your user object and a jwt token valid for 1 hour
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: ["success", "failure"]
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Example Picture
+                        url:
+                          type: string
+                          example: https://keshavaashopifychallenge.s3.amazonaws.com/someImageID
+                        postedBy:
+                          type: string
+                          example: testuser@gmail.com
+                        public:
+                          type: boolean
+                          enum: [true, false]
+                        tags:
+                          type: array
+                          items:
+                            - tagOne
+                            - tagTwo
+
+        400:
+          description: queryText not provided
+  /api/searchByImage:
+    post:
+      tags:
+      - "Images"
+      summary: Returns all public images and info corresponding to the queryImage
+      requestBody:
+        content: 
+          multipart/form-data: 
+            schema:          
+              type: object
+              properties:    
+                queryImage:  
+                  type: string
+                  format: binary
+      responses:
+        200:    # status code
+          description: A JSON object containing your user object and a jwt token valid for 1 hour
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: ["success", "failure"]
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Example Picture
+                        url:
+                          type: string
+                          example: https://keshavaashopifychallenge.s3.amazonaws.com/someImageID
+                        postedBy:
+                          type: string
+                          example: testuser@gmail.com
+                        public:
+                          type: boolean
+                          enum: [true, false]
+                        tags:
+                          type: array
+                          items:
+                            - tagOne
+                            - tagTwo
+
+        400:
+          description: queryImage not provided
+  /api/addImage:
+    post:
+      tags:
+      - "Images"
+      summary: Adds an image to the repo
+      parameters:
+      - in: "header"
+        name: token
+        description: Logged in JWT Token here
+        schema:
+          type: string     
+      - in: "header"
+        name: name
+        description: Name of your image, must be unique!
+        schema:
+          type: string
+          example: "New Image"
+      - in: "header"
+        name: tags
+        description: Tags you would like to associate your image with, separate with commas
+        schema:
+          type: string
+          example: "happy,sunny"
+      - in: "header"
+        name: public
+        description: Set whether or not the image is to be public or not
+        schema:
+          type: string
+          enum: ["true", "false"]
+      requestBody:
+        content: 
+          multipart/form-data: 
+            schema:          
+              type: object
+              properties:    
+                image:  
+                  type: string
+                  format: binary
+      responses:
+        200:    # status code
+          description: A JSON object containing your user object and a jwt token valid for 1 hour
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Example Picture
+                  url:
+                    type: string
+                    example: https://keshavaashopifychallenge.s3.amazonaws.com/someImageID
+                  postedBy:
+                    type: string
+                    example: testuser@gmail.com
+                  public:
+                    type: boolean
+                    enum: [true, false]
+                  tags:
+                    type: array
+                    items:
+                      - tagOne
+                      - tagTwo
+
+        400:
+          description: queryImage not provided OR invalid token
+  /api/users/user:
+    get:
+      tags:
+      - "User"
+      summary: Gets information about a user and their image uploads, public and private
+      description: Provide a valid and logged in jwt token of the user
+      parameters:
+      - in: "header"
+        name: token
+        description: Logged in JWT Token here
+        schema:
+          type: string     
+      responses:
+        200:    # status code
+          description: A JSON object containing your user object and all uploads with relevant info for each image upload
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: ["success", "failure"]
+                  user:
+                    type: object
+                    properties:
+                      name: 
+                        type: string
+                        example: loggedInUser
+                      email: 
+                        type: string
+                        example: loggedInUser@gmail.com
+                      id: 
+                        type: string
+                        example: 6089ea5c8680de08584066dc
+                      uploads:
+                        type: array
+                        items:
+                          - ImageIDs
+                  uploads:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        tags:
+                          type: array
+                          example: ["happy", "sunny"]
+                        name:
+                          type: string
+                          example: Happy day
+                        url:
+                          type: string
+                          example: https://keshavaashopifyfallchallenge.s3.amazonaws.com/someID"
+                        postedBy:
+                          type: string
+                          example: imageUploader@gmail.com
+                        public:
+                          type: boolean
+                          enum: [true, false]
+        400:
+          description: Invalid or missing token
