@@ -38,7 +38,7 @@ function Auth() {
             })    
         }else{
             const body = JSON.stringify({name, email, password})
-            fetch("/api/users/", {
+            fetch("/api/users/register", {
                 method: "POST",
                 body: body,
                 headers: {
