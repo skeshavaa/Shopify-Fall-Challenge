@@ -59,8 +59,6 @@ router.post('/register', (req, res) => {
 
 //Authenticating Login
 router.post('/login', (req, res) => {
-    console.log(req.body)
-    console.log("hei")
 
     const { email, password } = req.body;
 

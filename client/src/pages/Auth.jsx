@@ -78,7 +78,7 @@ function Auth() {
             <p className="authLabel">Email</p>
             <input className="authInput" value={email} placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)}/>
             <p className="authLabel">Password</p>
-            <input className="authInput" value={password} placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}/>
+            <input className="authInput" type="password" value={password} placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}/>
             <div className="authMsgs">
                 {login ? 
                 <p className="changeAuth">Don't have an account? <span className="highlight" onClick={(e) => setLogin(!login)}>Sign up here!</span></p> :
