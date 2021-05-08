@@ -16,7 +16,7 @@ function Navbar() {
     return (
         <div className="navContainer">
             <div className="leftContainer">
-                <h1 className="navLink">Postman Request Library</h1>
+                <a className="navA" href="api-docs" target="_blank"><h1 className="navLink">Postman Request Library</h1></a>
                 <h1 className="navLink">Swagger Documentation</h1>
             </div>
             {state.isAuthenticated ? 

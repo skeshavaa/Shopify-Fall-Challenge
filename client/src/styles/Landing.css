@@ -9,6 +9,15 @@
     color: #FF8541;
 }
 
+.heading3 {
+    font-family: "Comfortaa", sans-serif;
+    font-size: 14px;
+}
+
+.APILink{
+    text-decoration: none;
+}
+
 .landingContainer{
     text-align: left;
     margin-top: 35px;
@@ -23,4 +32,23 @@
 
 .searchContainer{
     margin-top: 65px;
+}
+
+.row{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.githubIcon{
+    width: 30px;
+    height: 30px;
+    padding-right: 35px;
+}
+
+.githubIcon:hover{
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.2s;
 }

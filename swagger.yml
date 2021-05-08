@@ -1,12 +1,13 @@
 openapi: 3.0.0
 info:
-  title: Sample API
-  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  title: Keshavaa's Shopify Fall Intern Challenge API
+  description: Backend API for my Fall backend/data developer internship image repository
   version: 0.1.9
 servers:
-  # - url: https://young-cove-79509.herokuapp.com/
+  - url: https://young-cove-79509.herokuapp.com/
+    description: Deployed backend API on heroku for production testing and usage
   - url: http://localhost:5000/
-    description: Optional server description, e.g. Main (production) server
+    description: For local version, for development testing and usage
 paths:
   /api/users/register:
     post:
@@ -239,7 +240,7 @@ paths:
     post:
       tags:
       - "Images"
-      summary: Adds an image to the repo
+      summary: Adds an image to the repo, please use a jpg or png file format
       parameters:
       - in: "header"
         name: token
@@ -265,6 +266,7 @@ paths:
           type: string
           enum: ["true", "false"]
       requestBody:
+        description: Please use a jpg or png file format for your image!
         content: 
           multipart/form-data: 
             schema:          
