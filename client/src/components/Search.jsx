@@ -94,8 +94,8 @@ function Search() {
         const config = {
             bucketName: "keshavaashopifyfallchallenge",
             region: "ca-central-1",
-            accessKeyId: "AKIAQLCIPQ3CUIIZL4U4",
-            secretAccessKey: "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"
+            accessKeyId: process.env.ID,
+            secretAccessKey: process.env.SECRET
         }
 
         uploadFile(queryImage, config).then((data) => {
