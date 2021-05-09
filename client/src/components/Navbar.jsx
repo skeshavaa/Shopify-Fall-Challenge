@@ -17,7 +17,7 @@ function Navbar() {
         <div className="navContainer">
             <div className="leftContainer">
                 <a className="navA" href="api-docs" target="_blank"><h1 className="navLink">Swagger Documentation</h1></a>
-                <h1 className="navLink">Postman Request Library</h1>
+                <a className="navA" href="/PostmanCollection.json" download="PostmanLibraryKeshavaa.json"><h1 className="navLink">Postman Request Library</h1></a>
             </div>
             {state.isAuthenticated ? 
                 <div className="rightContainer">
