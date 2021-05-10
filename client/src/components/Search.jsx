@@ -103,7 +103,7 @@ function Search() {
 
         uploadFile(queryImage, config).then((data) => {
 
-            fetch("/api/getLabels", {
+            fetch("https://young-cove-79509.herokuapp.com/api/getLabels", {
                 method: "POST",
                 body: {
                     url: data.location

@@ -8,7 +8,6 @@ import { useReducer } from 'react'
 import React, { createContext } from 'react'
 import Profile from './pages/Profile';
 
-const dotenv = require('dotenv')
 
 export const AuthContext = createContext();
 const initialState = {
