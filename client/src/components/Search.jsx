@@ -5,6 +5,7 @@ import axios from 'axios'
 import Masonry from 'react-masonry-css'
 import { uploadFile } from 'react-s3'
 const vision = require('@google-cloud/vision')
+const dotenv = require('dotenv')
 
 function Search() {
     const [data, setData] = useState([])
@@ -34,7 +35,6 @@ function Search() {
         if (queryText == ""){
             data.forEach((image) => {
                 imageArr.push(<img className="image-item" src={image.url} />)
-                console.log(image)
             })
         }else{
             const records = []
@@ -92,7 +92,7 @@ function Search() {
         e.preventDefault();
         const queryImage = e.target.files[0]
 
-        console.log(process.env.REACT_APP_SECRET)
+        //console.log(process.env.REACT_APP_SECRET)
 
         const config = {
             bucketName: "keshavaashopifyfallchallenge",
@@ -103,7 +103,7 @@ function Search() {
 
         uploadFile(queryImage, config).then((data) => {
 
-            fetch("/api/users/login", {
+            fetch("/api/getLabels", {
                 method: "POST",
                 body: {
                     url: data.location
