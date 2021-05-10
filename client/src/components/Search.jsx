@@ -91,6 +91,9 @@ function Search() {
     const handleFileInput = async (e) => {
         e.preventDefault();
         const queryImage = e.target.files[0]
+
+        console.log(process.env.REACT_APP_SECRET)
+
         const config = {
             bucketName: "keshavaashopifyfallchallenge",
             region: "ca-central-1",
@@ -100,12 +103,14 @@ function Search() {
 
         uploadFile(queryImage, config).then((data) => {
 
-            axios({
-                method: "post",
-                url: "http://localhost:5000/api/getLabels",
-                data: {
+            fetch("/api/users/login", {
+                method: "POST",
+                body: {
                     url: data.location
-                }
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                },
             }).then((res) => {
                 setQueryText(res.data.labels.join())
             })

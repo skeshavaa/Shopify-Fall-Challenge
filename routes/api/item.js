@@ -14,7 +14,7 @@ const client = new vision.ImageAnnotatorClient({
 });
 
 router.post('/getLabels', (req, res) => {
-    console.log(req.body.url)
+    console.log(req.body)
     client.labelDetection(req.body.url).then(results => {
         const labels = results[0].labelAnnotations;
 
