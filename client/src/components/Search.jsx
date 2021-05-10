@@ -101,17 +101,12 @@ function Search() {
             secretAccessKey: process.env.REACT_APP_SECRET
         }
 
-        uploadFile(queryImage, config).then((data) => {
+        uploadFile(queryImage, config).then((data) => {            
 
-            fetch("https://young-cove-79509.herokuapp.com/api/getLabels", {
-                method: "POST",
-                body: {
-                    url: data.location
-                },
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            axios.post("/api/getLabels", {
+                url: data.location
             }).then((res) => {
+                console.log(res);
                 setQueryText(res.data.labels.join())
             })
         }).catch((err) => console.log(err))
